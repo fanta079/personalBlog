@@ -6,6 +6,8 @@ dist/
 node_modules/
 # local npm cache (used when installing with a custom cache dir)
 .npm-cache/
+# temporary scratch dir
+.tmp-lib/
 # logs
 npm-debug.log*
 yarn-debug.log*
