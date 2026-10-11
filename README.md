@@ -67,7 +67,7 @@ npm run preview  # 预览构建产物
 ## 4. 部署到 GitHub Pages
 
 1. 把代码推到 GitHub 仓库（默认监听 `main` 分支）。
-2. 工作流会通过 `configure-pages` 的 `enablement: true` **自动把 Pages 的 Source 设为 GitHub Actions**，通常无需手动配置。若组织策略禁止自动启用，再到 **Settings → Pages → Source** 手动选择 **GitHub Actions** 即可。
+2. 在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**（本仓库已配置好；把这个模板复制到新仓库时需手动设置一次）。
 3. 之后每次 `git push` 到 `main`，工作流（`.github/workflows/deploy.yml`）会自动构建并发布。
 
 首次部署后，稍等一两分钟，访问 `https://<你的用户名>.github.io/<仓库名>/` 即可看到博客。

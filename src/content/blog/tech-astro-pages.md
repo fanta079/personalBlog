@@ -36,6 +36,6 @@ export default defineConfig({
 2. `npm run build` 产出 `dist/`
 3. `upload-pages-artifact` + `deploy-pages` 发布
 
-工作流会通过 `configure-pages` 自动把 Pages 的 Source 设为 **GitHub Actions**，通常无需手动配置。
+只需在仓库 **Settings → Pages** 里把 Source 设为 **GitHub Actions**（设置一次即可），之后每次推送都会自动发布。
 
 > 写完文章 `git push`，喝口水回来博客就更新了。

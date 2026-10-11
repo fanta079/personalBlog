@@ -29,12 +29,9 @@ jobs:
           node-version: 22
           cache: npm
 
-      # 若 Pages 尚未开启，此步骤会自动启用（Source = GitHub Actions），
-      # 已开启时是安全的空操作。
+      # 读取 Pages 配置（仓库需已开启 Pages，Source = GitHub Actions）
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Install dependencies
         run: npm ci
