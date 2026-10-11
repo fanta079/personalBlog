@@ -1,0 +1,20 @@
+---
+import { CATEGORIES, BASE } from '../consts';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+const { post } = Astro.props;
+const date = post.data.pubDate.toISOString().slice(0, 10);
+const cat = CATEGORIES[post.data.category];
+---
+
+<a class="post-card" href={`${BASE}posts/${post.id}/`}>
+  <div class="meta">
+    <span class="cat">{cat.label}</span>
+    <time datetime={date}>{date}</time>
+  </div>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.description}</p>
+</a>

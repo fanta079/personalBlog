@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+---
+
+<BaseLayout title="关于" description={`关于 ${SITE_TITLE} 与作者 ${SITE_AUTHOR}`}>
+  <article class="prose">
+    <h1>关于本站</h1>
+    <p>
+      你好，我是 <strong>{SITE_AUTHOR}</strong>。这是我的个人博客「{SITE_TITLE}」，
+      用 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建，
+      通过 GitHub Actions 自动部署到 GitHub Pages。
+    </p>
+    <p>
+      这里记录两件事：一边是写代码的技术笔记与踩坑记录，一边是代码之外的生活随笔。
+      我把它们放在同一个站点，因为生活和技术本就不会真正分开。
+    </p>
+
+    <h2>怎么写文章</h2>
+    <p>在 <code>src/content/blog/</code> 目录下新建一个 <code>.md</code> 文件，按下面的格式写即可：</p>
+    <pre><code>---
+title: 文章标题
+description: 一句话摘要
+pubDate: 2026-10-11
+category: tech        # tech 或 life
+tags: [Astro, 前端]
+draft: false
+---
+
+正文用 Markdown 写……
+</code></pre>
+
+    <h2>联系方式</h2>
+    <p>
+      GitHub：<a href="https://github.com/fanta079" target="_blank" rel="noopener">@fanta079</a><br />
+      也可以通过博客的 RSS 订阅更新。
+    </p>
+  </article>
+</BaseLayout>

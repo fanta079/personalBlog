@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE_DESCRIPTION } from '../consts';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const recent = posts.slice(0, 5);
+const techCount = posts.filter((p) => p.data.category === 'tech').length;
+const lifeCount = posts.filter((p) => p.data.category === 'life').length;
+---
+
+<BaseLayout>
+  <section class="hero">
+    <h1>半栈手记</h1>
+    <p>{SITE_DESCRIPTION}</p>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <h2>最新文章</h2>
+      <span style="font-size:13px;color:var(--fg-soft)">技术 {techCount} · 生活 {lifeCount}</span>
+    </div>
+    {recent.length > 0 ? (
+      recent.map((post) => <PostCard post={post} />)
+    ) : (
+      <p class="empty">还没有文章，去 <code>src/content/blog/</code> 写第一篇吧。</p>
+    )}
+  </section>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import { NAV_LINKS, SITE_TITLE, BASE } from '../consts';
+
+const current = Astro.url.pathname.replace(/\/+$/, '');
+const isActive = (href: string) => {
+  const h = (BASE + href.replace(/^\//, '')).replace(/\/+$/, '') || '/';
+  if (h === BASE.replace(/\/+$/, '') || h === '/') return current === BASE.replace(/\/+$/, '') || current === '/';
+  return current === h || current.startsWith(h + '/');
+};
+---
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href={BASE}>{SITE_TITLE}</a>
+    <nav class="nav">
+      {NAV_LINKS.map((link) => (
+        <a href={BASE + link.href.replace(/^\//, '')} class={isActive(link.href) ? 'active' : ''}>{link.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>

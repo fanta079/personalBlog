@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { CATEGORIES } from '../../consts';
+
+export async function getStaticPaths() {
+  return Object.keys(CATEGORIES).map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+const info = CATEGORIES[category!];
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.category === category))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={info.label} description={info.description}>
+  <section class="hero">
+    <h1>{info.label}</h1>
+    <p>{info.description}</p>
+  </section>
+  <section>
+    {posts.length > 0 ? (
+      posts.map((post) => <PostCard post={post} />)
+    ) : (
+      <p class="empty">这个分类下还没有文章。</p>
+    )}
+  </section>
+</BaseLayout>
