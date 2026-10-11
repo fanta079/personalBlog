@@ -171,6 +171,35 @@ main { padding: 48px 0 64px; }
 }
 .prose img { max-width: 100%; border-radius: var(--radius); }
 
+/* 表格：边框 + 表头底色 + 斑马纹；窄屏可横向滚动 */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 22px 0;
+  font-size: 14.5px;
+  display: block;
+  overflow-x: auto;
+}
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 9px 13px;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.6;
+}
+.prose thead th {
+  background: var(--bg-soft);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.prose tbody tr:nth-child(even) {
+  background: var(--bg-soft);
+}
+.prose table code {
+  white-space: nowrap;
+}
+
 .post-header { margin-bottom: 32px; }
 .post-header .meta {
   display: flex; gap: 12px; align-items: center;
