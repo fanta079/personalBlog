@@ -21,3 +21,6 @@ pnpm-debug.log*
 # editor
 .vscode/*
 !.vscode/extensions.json
+
+# WorkBuddy 内部数据（不随仓库发布）
+.workbuddy/
