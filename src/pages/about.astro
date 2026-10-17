@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+import { SITE_AUTHOR, SITE_TITLE, BASE } from '../consts';
 ---
 
 <BaseLayout title="关于" description={`关于 ${SITE_TITLE} 与作者 ${SITE_AUTHOR}`}>
@@ -14,6 +14,19 @@ import { SITE_AUTHOR, SITE_TITLE } from '../consts';
     <p>
       这里记录两件事：一边是写代码的技术笔记与踩坑记录，一边是代码之外的生活随笔。
       我把它们放在同一个站点，因为生活和技术本就不会真正分开。
+    </p>
+
+    <h2>最近在做什么</h2>
+    <p>
+      在折腾<strong>本地大模型微调</strong>：用一张 8GB 显卡跑 QLoRA，把 4B 模型调成有固定说话方式的人设，
+      再接上语音输入与合成，让它真的能对话。技术上没什么新东西，难点全在数据——人设卡怎么写、
+      场景怎么铺、比例怎么控。这个站上的文章多半来自那条路上翻的车。
+    </p>
+    <p>
+      想直接看结果可以读
+      <a href={`${BASE}posts/tech-8gb-qlora-persona/`}>《8GB 显存，把一个 4B 模型养成一个人》</a>；
+      只想看方法论的话是
+      <a href={`${BASE}posts/tech-ratio-as-structure/`}>《模型读不懂「约 10%」》</a>。
     </p>
 
     <h2>怎么写文章</h2>

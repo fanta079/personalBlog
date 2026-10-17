@@ -85,7 +85,42 @@ wsl --import Ubuntu E:\WSL\Ubuntu E:\ubuntu.tar --version 2
 
 > WSL 2.5+ 还支持更省事的一条命令直接搬：`wsl --manage Ubuntu --move "E:\WSL\Ubuntu"`。
 
-## 五、踩坑对照表
+## 五、发行版下载卡住：用镜像导入（国内常用兜底）
+
+`wsl --install` 本体很快，但下载发行版走的是微软 CDN。国内常见的结果是下载条卡在 `0.0%`，或者直接报：
+
+```text
+WslRegisterDistribution failed with error: 0x80072efd
+WININET_E_CANNOT_CONNECT
+```
+
+这时候不用重装 WSL —— WSL 本体其实已经装好了，只是发行版没拉下来。从国内镜像下一个 `.wsl` 镜像文件，手动导入即可：
+
+```powershell
+# 1) 从阿里云镜像下载（清华、中科大、华为云也有）
+#    https://mirrors.aliyun.com/ubuntu-releases/24.04/ubuntu-24.04.5-wsl-amd64.wsl
+
+# 2) 导入到指定目录（每个发行版必须独立目录）
+wsl --import Ubuntu-24.04 E:\wsl\Ubuntu-24.04 .\ubuntu-24.04.5-wsl-amd64.wsl --version 2
+```
+
+下载时如果单线程只有几十 KB/s，那是镜像站对单连接限速，分段多线程（`curl -r` 起 8 个连接）能快 5~10 倍。
+
+### 导入之后的第一件事：建用户
+
+`wsl --import` 没有商店版那套「创建用户」引导，**首次启动直接是 root**。手动补一下：
+
+```bash
+adduser fanta
+usermod -aG sudo fanta
+printf '[user]\ndefault=fanta\n' > /etc/wsl.conf
+```
+
+然后在 Windows 侧执行 `wsl --shutdown`，再进就是普通用户了。
+
+> 另外提醒：所有发行版的虚拟磁盘都叫 `ext4.vhdx`，**导入到同一个目录会互相覆盖**。一个发行版一个目录。
+
+## 六、踩坑对照表
 
 | 现象 | 原因 | 处理 |
 | --- | --- | --- |
@@ -96,8 +131,9 @@ wsl --import Ubuntu E:\WSL\Ubuntu E:\ubuntu.tar --version 2
 | 提示需要启用虚拟机平台 | 组件没启用 | 管理员 PowerShell 执行 `dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart` 后重启 |
 | 提示 WSL2 需要更新内核 | 缺内核更新包 | `wsl --update`，或手动安装 [wsl_update_x64.msi](https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi) |
 | 装到 C 盘快满了 | 默认存放在系统盘 | 用 `wsl --export` 再 `wsl --import` 迁移到其他盘 |
+| 报 `WININET_E_CANNOT_CONNECT` | 微软 CDN 下载不通 | 见上一节，用国内镜像 `.wsl` 导入 |
 
-## 六、Windows 太旧（内部版本 < 19041）的手动安装
+## 七、Windows 太旧（内部版本 < 19041）的手动安装
 
 1. 管理员 PowerShell 执行：`dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`
 2. 再执行：`dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart`
